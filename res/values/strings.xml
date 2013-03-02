@@ -3,5 +3,8 @@
 
     <string name="app_name">TypeSpeed</string>
     <string name="dummy_button">Dummy Button</string>
+    <string name="title_activity_input">InputActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

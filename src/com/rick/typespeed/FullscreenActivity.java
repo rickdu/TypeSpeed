@@ -22,11 +22,45 @@ public class FullscreenActivity extends Activity {
         
     }
     
+    public void onClick(View v)
+    {
+    	switch(v.getId())
+    	{
+    	case R.id.startButton:
+    		startTesting();
+    		break;
+    	case R.id.optionButton:
+    		showOptions();
+    		break;
+    	case R.id.rankButton:
+    		showRanks();
+    		break;
+    	}
+    }
+    
+    private void showRanks()
+    {
+    	
+    }
+    
+    private void showOptions()
+    {
+    	
+    }
+    
+    private void startTesting()
+    {
+    	// show activity
+    	Intent intent = new Intent(this, InputActivity.class);
+    	startActivity(intent);
+    	// start monitor
+    	startMonitor();
+    }
+    
     private void startMonitor()
     {
     	Intent intent = new Intent(this, InputCheckService.class);
     	startService(intent);
-    	
     }
 
 }

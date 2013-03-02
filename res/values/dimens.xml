@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="START_UI_FONT_SIZE">30dp</dimen>
+    <dimen name="START_BUTTON_TOP_MARGIN">50dp</dimen>
+    <dimen name="OPTION_BUTTON_TOP_MARGIN">100dp</dimen>
+    <dimen name="RANK_BUTTON_TOP_MARGIN">150dp</dimen>
+</resources>

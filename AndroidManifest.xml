@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.rick.typespeed.FullscreenActivity"
+            android:name="com.snowstorm.typefaster.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
@@ -27,17 +27,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.rick.typespeed.SettingsActivity"
+            android:name="com.snowstorm.typefaster.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
 
         <service
-            android:name="com.rick.typespeed.InputCheckService"
+            android:name="com.snowstorm.typefaster.InputCheckService"
             android:enabled="true" >
         </service>
 
         <activity
-            android:name="com.rick.typespeed.InputActivity"
+            android:name="com.snowstorm.typefaster.InputActivity"
             android:label="@string/title_activity_input" >
         </activity>
     </application>

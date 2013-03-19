@@ -25,7 +25,8 @@ public class InputActivity extends Activity {
 		setContentView(R.layout.activity_input);
 		TextView oriText = (TextView)findViewById(R.id.originalText);
 		//TODO: ignore text persistence currently
-		oriText.setText("大量中文输入法的存在让用户无所适从或者忽视了最佳的选择，打字本来就是为了快捷方便，没有对快的衡量怎么能更全面地评价输入法的好坏呢？abcdefghijklmnopqrstuvwxyz012345678\nabcdefghijklmnopqrstuvwxyz012345678");
+//		oriText.setText("大量中文输入法的存在让用户无所适从或者忽视了最佳的选择，打字本来就是为了快捷方便，没有对快的衡量怎么能更全面地评价输入法的好坏呢？abcdefghijklmnopqrstuvwxyz012345678\nabcdefghijklmnopqrstuvwxyz012345678");
+		oriText.setText("abcdefghijklmnopqrstuvwxyz012345678");
 		
 //		SpannableString ss = new SpannableString("红色打电话斜体删除线绿色下划线图片:.");
 //	    ss.setSpan(new ForegroundColorSpan(Color.RED), 0, 2,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -57,13 +58,14 @@ public class InputActivity extends Activity {
 		getMenuInflater().inflate(R.menu.input, menu);
 		return true;
 	}
-
 }
 
 class InputWatcher implements TextWatcher {
 	private TextView tv;
 	private EditText et;
-	
+	private boolean isChanged = false;
+	private long startTime = System.currentTimeMillis();
+
 	public InputWatcher(TextView tv, EditText et) {
 		this.tv = tv;
 		this.et = et;
@@ -73,6 +75,19 @@ class InputWatcher implements TextWatcher {
 	public void afterTextChanged(Editable s) {
 		// TODO Auto-generated method stub
 		System.out.println("after text Changed");
+		if(this.isChanged)
+			return;
+		List diffs = this.diff(this.tv.getText().toString(), this.et.getText().toString());
+		SpannableString ss = new SpannableString(s.toString());
+		for(int i = 0; i < diffs.size(); i++) {
+			ss.setSpan(new ForegroundColorSpan(Color.RED), Integer.parseInt(diffs.get(i).toString()), 
+					Integer.parseInt(diffs.get(i).toString()) + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
+		this.isChanged = true;
+		this.et.setText(ss);
+		this.isChanged = false;
+		this.et.invalidate();
+		this.et.setSelection(this.et.getText().length());
 	}
 
 	@Override
@@ -89,16 +104,12 @@ class InputWatcher implements TextWatcher {
 		if(this.et.getText().length() == this.tv.getText().length()) {
 			// TODO: finish, show result dialog
 			System.out.println("User input completed");
-		}
-		if(count > 0) {
-			List diffs = this.diff(this.tv.getText().toString(), this.et.getText().toString());
-			SpannableString ss = new SpannableString(s.toString());
-			for(int i = 0; i < diffs.size(); i++) {
-				ss.setSpan(new ForegroundColorSpan(Color.RED), Integer.parseInt(diffs.get(i).toString()), 
-						Integer.parseInt(diffs.get(i).toString()) + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			}
-			this.et.setText(ss);
-//			this.et.getText().setSpan(new ForegroundColorSpan(Color.RED), start, start + count, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			long timeCost = System.currentTimeMillis() - startTime;
+			List diffs = diff(this.tv.getText().toString(), this.et.getText().toString());
+			float rate = (float) ((this.tv.getText().length() - diffs.size()) * 100.0 / this.tv.getText().length());
+			System.out.println("time cost = " + timeCost + " ms");
+			System.out.println("correct rate = " + rate);
+			System.out.println("Type speed (char/min)= " + this.tv.getText().length() * 1000 * 60 / timeCost);
 		}
 	}
 	
